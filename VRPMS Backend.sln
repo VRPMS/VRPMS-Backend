@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.Api", "VRPMS.Api\VRPMS.Api.csproj", "{F12AF795-054E-48C0-A889-30BB1E1E4076}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C201E3EC-AFB2-4D76-892F-73B87555E39D}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.BusinessLogic", "VRPMS.BusinessLogic\VRPMS.BusinessLogic.csproj", "{D83C8CA6-84F2-40C8-846C-7AF3B4084D5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.BusinessLogic.Interfaces", "VRPMS.BusinessLogic.Interfaces\VRPMS.BusinessLogic.Interfaces.csproj", "{DE4F2E65-F6A0-4FE9-8B2A-327896264080}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.DataAccess", "VRPMS.DataAccess\VRPMS.DataAccess.csproj", "{980FD672-D5C2-4FC5-BE8C-7B0E3BC72319}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.DataAccess.Interfaces", "VRPMS.DataAccess.Interfaces\VRPMS.DataAccess.Interfaces.csproj", "{3C26DEA3-4B3E-49E0-91D4-47A9E64E34E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.DataContracts", "VRPMS.DataContracts\VRPMS.DataContracts.csproj", "{81C7D3CB-B167-42B2-B9BE-451A3F4C0DDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.Common", "VRPMS.Common\VRPMS.Common.csproj", "{6476E796-D3D2-4EBD-8816-B71928F9A3DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F12AF795-054E-48C0-A889-30BB1E1E4076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12AF795-054E-48C0-A889-30BB1E1E4076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12AF795-054E-48C0-A889-30BB1E1E4076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12AF795-054E-48C0-A889-30BB1E1E4076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D83C8CA6-84F2-40C8-846C-7AF3B4084D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D83C8CA6-84F2-40C8-846C-7AF3B4084D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D83C8CA6-84F2-40C8-846C-7AF3B4084D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D83C8CA6-84F2-40C8-846C-7AF3B4084D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE4F2E65-F6A0-4FE9-8B2A-327896264080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE4F2E65-F6A0-4FE9-8B2A-327896264080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE4F2E65-F6A0-4FE9-8B2A-327896264080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE4F2E65-F6A0-4FE9-8B2A-327896264080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{980FD672-D5C2-4FC5-BE8C-7B0E3BC72319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{980FD672-D5C2-4FC5-BE8C-7B0E3BC72319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{980FD672-D5C2-4FC5-BE8C-7B0E3BC72319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{980FD672-D5C2-4FC5-BE8C-7B0E3BC72319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C26DEA3-4B3E-49E0-91D4-47A9E64E34E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C26DEA3-4B3E-49E0-91D4-47A9E64E34E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C26DEA3-4B3E-49E0-91D4-47A9E64E34E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C26DEA3-4B3E-49E0-91D4-47A9E64E34E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81C7D3CB-B167-42B2-B9BE-451A3F4C0DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81C7D3CB-B167-42B2-B9BE-451A3F4C0DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81C7D3CB-B167-42B2-B9BE-451A3F4C0DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81C7D3CB-B167-42B2-B9BE-451A3F4C0DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6476E796-D3D2-4EBD-8816-B71928F9A3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6476E796-D3D2-4EBD-8816-B71928F9A3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6476E796-D3D2-4EBD-8816-B71928F9A3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6476E796-D3D2-4EBD-8816-B71928F9A3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

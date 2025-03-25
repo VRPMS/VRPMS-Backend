@@ -1,0 +1,6 @@
+﻿services:
+  vrpms.api:
+    image: vrpms.api
+    build:
+      context: .
+      dockerfile: VRPMS.Api/Dockerfile
