@@ -16,16 +16,20 @@ public static class ReflectionHelper
             .Where(type => typeof(T).IsAssignableFrom(type) && type is { IsInterface: false, IsAbstract: false });
     }
 
-    private static Assembly[] GetSolutionAssemblies(string nameContains = VrpmsAssemblyPrefix)
+    private static Assembly[] GetSolutionAssemblies()
     {
         var fileNames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, LibraryFileNameWildcard);
 
-        if (!string.IsNullOrEmpty(nameContains))
+        if (!string.IsNullOrEmpty(VrpmsAssemblyPrefix))
         {
-            fileNames = fileNames.Where(w => Path.GetFileName(w).Contains(nameContains) && !Path.GetFileName(w).Contains(AppDomain.CurrentDomain.FriendlyName)).ToArray();
+            fileNames = fileNames
+                .Where(w => Path.GetFileName(w).Contains(VrpmsAssemblyPrefix) && !Path.GetFileName(w).Contains(AppDomain.CurrentDomain.FriendlyName))
+                .ToArray();
         }
 
-        return fileNames.Select(x => Assembly.Load(AssemblyName.GetAssemblyName(x))).ToArray();
+        return fileNames
+            .Select(x => Assembly.Load(AssemblyName.GetAssemblyName(x)))
+            .ToArray();
     }
 
     public static void RegisterAssemblies(this IServiceCollection services)

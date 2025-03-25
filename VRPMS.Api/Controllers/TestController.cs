@@ -13,7 +13,7 @@ public class TestController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<TestResponse> Get([FromBody] TestRequest request)
+    public async Task<TestResponse> Get([FromQuery] TestRequest request)
     {
         return await testService.GetTestResponse(request);
     }

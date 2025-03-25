@@ -18,10 +18,10 @@ public static class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
-            app.MapScalarApiReference(options =>
+            app.MapScalarApiReference(endpointPrefix: "api", options =>
             {
                 options.WithTitle("VRPMS API");
-                options.WithTheme(ScalarTheme.Moon);
+                options.WithTheme(ScalarTheme.BluePlanet);
                 options.WithSidebar(true);
             });
         }

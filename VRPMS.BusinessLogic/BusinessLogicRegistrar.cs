@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using VRPMS.Common.Services;
 using VRPMS.BusinessLogic.Interfaces.Services;
 using VRPMS.BusinessLogic.Services;
-using VRPMS.Common.Services;
 
 namespace VRPMS.BusinessLogic;
 
