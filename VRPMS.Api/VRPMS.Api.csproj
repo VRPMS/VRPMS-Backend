@@ -9,8 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.3.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\VRPMS.BusinessLogic\VRPMS.BusinessLogic.csproj" />
+      <ProjectReference Include="..\VRPMS.Common\VRPMS.Composition.csproj" />
     </ItemGroup>
 
 </Project>

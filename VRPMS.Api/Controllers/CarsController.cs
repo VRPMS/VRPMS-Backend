@@ -7,14 +7,14 @@ using VRPMS.DataContracts.Responses;
 namespace VRPMS.Api.Controllers;
 
 [ApiController]
-[Route(TestControllerConstants.Prefix)]
-public class TestController(
-    ITestService testService)
+[Route(CarsControllerConstants.Prefix)]
+public class CarsController(
+    ICarsService carsService)
     : ControllerBase
 {
     [HttpGet]
-    public async Task<TestResponse> Get([FromQuery] TestRequest request)
+    public async Task<IEnumerable<GetCarsGridResponse>> GetCarsGrids([FromQuery] GetCarsGridRequest request)
     {
-        return await testService.GetTestResponse(request);
+        return await carsService.GetCarsGrid(request);
     }
 }

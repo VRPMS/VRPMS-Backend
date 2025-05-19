@@ -3,7 +3,7 @@ using VRPMS.DataContracts.Responses;
 
 namespace VRPMS.BusinessLogic.Interfaces.Services;
 
-public interface ITestService
+public interface ICarsService
 {
-    public Task<TestResponse> GetTestResponse(TestRequest request);
+    Task<IEnumerable<GetCarsGridResponse>> GetCarsGrid(GetCarsGridRequest request);
 }

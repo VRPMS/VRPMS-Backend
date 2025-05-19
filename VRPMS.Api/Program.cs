@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using VRPMS.Common.BusinessLogic;
 using VRPMS.Common.Helpers;
 
 namespace VRPMS.Api;
@@ -11,6 +12,7 @@ public static class Program
 
         builder.Services.AddOpenApi();
         builder.Services.AddControllers();
+        builder.Services.RegisterDefaultDatabase(builder.Configuration);
         builder.Services.RegisterAssemblies();
 
         var app = builder.Build();
@@ -19,7 +21,7 @@ public static class Program
         {
             app.MapOpenApi();
             app.MapScalarApiReference(endpointPrefix: "api", options =>
-            {
+            { 
                 options.WithTitle("VRPMS API");
                 options.WithTheme(ScalarTheme.BluePlanet);
                 options.WithSidebar(true);
