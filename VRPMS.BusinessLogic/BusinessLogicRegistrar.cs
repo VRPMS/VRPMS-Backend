@@ -9,6 +9,8 @@ public class BusinessLogicRegistrar : IRegistrable
 {
     public void Register(IServiceCollection services)
     {
-        services.AddScoped<ITestService, TestService>();
+        services.AddScoped<ILocationsService, LocationsService>();
+        services.AddScoped<ICarsService, CarsService>();
+        services.AddScoped<ILovsService, LovsService>();
     }
 }

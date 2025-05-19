@@ -8,7 +8,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\VRPMS.BusinessLogic.Interfaces\VRPMS.BusinessLogic.Interfaces.csproj" />
-      <ProjectReference Include="..\VRPMS.DataAccess\VRPMS.DataAccess.csproj" />
+      <ProjectReference Include="..\VRPMS.Composition\VRPMS.Common.csproj" />
+      <ProjectReference Include="..\VRPMS.DataAccess.Interfaces\VRPMS.DataAccess.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>
