@@ -1,14 +1,14 @@
 ﻿# 1. Build stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY *.csproj ./
 RUN dotnet restore
-COPY . ./
+COPY . .
 RUN dotnet publish -c Release -o /app
 
 # 2. Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=build /app ./
 ENV ASPNETCORE_URLS=http://+:8080
 ENTRYPOINT ["dotnet","VRPMS.Api.dll"]
