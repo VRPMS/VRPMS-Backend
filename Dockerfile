@@ -10,7 +10,7 @@ COPY ["VRPMS.Composition/VRPMS.Composition.csproj", "VRPMS.Composition/"]"]
 COPY ["VRPMS.DataAccess/VRPMS.DataAccess.csproj", "VRPMS.DataAccess/"]
 COPY ["VRPMS.DataAccess.Interfaces/VRPMS.DataAccess.Interfaces.csproj", "VRPMS.DataAccess.Interfaces/"]
 COPY ["VRPMS.DataContracts/VRPMS.DataContracts.csproj", "VRPMS.DataContracts/"]"]
-COPY ["VRPMS.sln", "./"]
+COPY ["VRPMS Backend.sln", "./"]
 
 RUN dotnet restore
 
