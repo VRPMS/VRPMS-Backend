@@ -12,6 +12,7 @@ public static class Program
 
         builder.Services.AddOpenApi();
         builder.Services.AddControllers();
+        builder.Services.AddCors();
         builder.Services.RegisterDefaultDatabase(builder.Configuration);
         builder.Services.RegisterAssemblies();
 
@@ -29,6 +30,7 @@ public static class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseCors();
 
         app.UseRouting();
 
