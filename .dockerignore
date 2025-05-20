@@ -26,5 +26,5 @@ README.md
 bin/
 obj/
 **/secrets.json
-appsettings*.json
+**/appsettings*.json
 .git
