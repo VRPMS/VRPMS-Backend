@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Scalar.AspNetCore;
 using VRPMS.Common.Helpers;
 using VRPMS.Composition.BusinessLogic;
@@ -14,11 +15,35 @@ public static class Program
 
         builder.Services.AddOpenApi();
         builder.Services.AddControllers();
-        builder.Services.AddCors();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy => policy
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+            );
+        });
+
+        builder.Services.Configure<ForwardedHeadersOptions>(opts =>
+        {
+            opts.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            opts.KnownNetworks.Clear();
+            opts.KnownProxies.Clear();
+        });
+
         builder.Services.RegisterDefaultDatabase(builder.Configuration);
         builder.Services.RegisterAssemblies();
 
         var app = builder.Build();
+
+        app.UseForwardedHeaders();
+
+        app.UseHttpsRedirection();
+
+        app.UseRouting();
+
+        app.UseCors();
 
         app.MapOpenApi();
 
@@ -29,13 +54,12 @@ public static class Program
             options.WithSidebar(true);
         });
 
-        app.UseDeveloperExceptionPage();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
 
-        app.UseHttpsRedirection();
-        
-        app.UseCors();
-
-        app.UseRouting();
+        app.MapGet("/", () => Results.Ok("VRPMS API is running"));
 
         app.MapControllers();
 
