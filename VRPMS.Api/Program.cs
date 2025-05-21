@@ -20,16 +20,16 @@ public static class Program
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
+        app.MapOpenApi();
+
+        app.MapScalarApiReference(endpointPrefix: "scalar", options =>
         {
-            app.MapOpenApi();
-            app.MapScalarApiReference(endpointPrefix: "scalar", options =>
-            { 
-                options.WithTitle("VRPMS API");
-                options.WithTheme(ScalarTheme.BluePlanet);
-                options.WithSidebar(true);
-            });
-        }
+            options.WithTitle("VRPMS API");
+            options.WithTheme(ScalarTheme.BluePlanet);
+            options.WithSidebar(true);
+        });
+
+        app.MapGet("/", () => Results.Ok("VRPMS API is running"));
 
         app.UseHttpsRedirection();
         
