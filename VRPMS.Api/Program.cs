@@ -21,7 +21,7 @@ public static class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
-            app.MapScalarApiReference(endpointPrefix: "api", options =>
+            app.MapScalarApiReference(endpointPrefix: "scalar", options =>
             { 
                 options.WithTitle("VRPMS API");
                 options.WithTheme(ScalarTheme.BluePlanet);
