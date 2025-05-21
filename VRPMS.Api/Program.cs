@@ -22,14 +22,19 @@ public static class Program
 
         app.MapOpenApi();
 
-        app.MapScalarApiReference(endpointPrefix: "scalar", options =>
+        if (!app.Environment.IsProduction())
         {
-            options.WithTitle("VRPMS API");
-            options.WithTheme(ScalarTheme.BluePlanet);
-            options.WithSidebar(true);
-        });
+            app.UseDeveloperExceptionPage();
 
-        app.MapGet("/", () => Results.Ok("VRPMS API is running"));
+            app.MapScalarApiReference(endpointPrefix: "scalar", options =>
+            {
+                options.WithTitle("VRPMS API");
+                options.WithTheme(ScalarTheme.BluePlanet);
+                options.WithSidebar(true);
+            });
+
+            app.MapGet("/", () => Results.Ok("VRPMS API is running"));
+        }
 
         app.UseHttpsRedirection();
         
