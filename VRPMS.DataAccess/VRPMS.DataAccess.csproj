@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\VRPMS.Composition\VRPMS.Common.csproj" />
+      <ProjectReference Include="..\VRPMS.Common\VRPMS.Common.csproj" />
       <ProjectReference Include="..\VRPMS.DataAccess.Interfaces\VRPMS.DataAccess.Interfaces.csproj" />
     </ItemGroup>
 

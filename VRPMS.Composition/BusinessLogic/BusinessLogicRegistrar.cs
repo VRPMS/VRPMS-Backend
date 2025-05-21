@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VRPMS.DataAccess;
 
-namespace VRPMS.Common.BusinessLogic;
+namespace VRPMS.Composition.BusinessLogic;
 
 public static class BusinessLogicRegistrar
 {

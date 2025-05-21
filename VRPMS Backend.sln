@@ -20,9 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.DataAccess.Interfaces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.DataContracts", "VRPMS.DataContracts\VRPMS.DataContracts.csproj", "{81C7D3CB-B167-42B2-B9BE-451A3F4C0DDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.Composition", "VRPMS.Common\VRPMS.Composition.csproj", "{6476E796-D3D2-4EBD-8816-B71928F9A3DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.Composition", "VRPMS.Composition\VRPMS.Composition.csproj", "{6476E796-D3D2-4EBD-8816-B71928F9A3DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.Common", "VRPMS.Composition\VRPMS.Common.csproj", "{A4D38A6D-AEBB-477B-886E-19A144C5C9DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPMS.Common", "VRPMS.Common\VRPMS.Common.csproj", "{A4D38A6D-AEBB-477B-886E-19A144C5C9DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
