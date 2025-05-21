@@ -15,12 +15,16 @@ COPY ["VRPMS Backend.sln", "./"]
 RUN dotnet restore
 
 COPY . .
-
 RUN dotnet publish "VRPMS.Api/VRPMS.Api.csproj" -c Release -o /app
 
 # 2. Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
+
+EXPOSE 8080
+
 ENV ASPNETCORE_URLS=http://+:8080
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+
 ENTRYPOINT ["dotnet","VRPMS.Api.dll"]

@@ -10,6 +10,8 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.WebHost.UseKestrel().UseUrls("http://0.0.0.0:8080");
+
         builder.Services.AddOpenApi();
         builder.Services.AddControllers();
         builder.Services.AddCors();
@@ -30,6 +32,7 @@ public static class Program
         }
 
         app.UseHttpsRedirection();
+        
         app.UseCors();
 
         app.UseRouting();
