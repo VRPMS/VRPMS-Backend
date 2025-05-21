@@ -22,7 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\VRPMS.BusinessLogic\VRPMS.BusinessLogic.csproj" />
-      <ProjectReference Include="..\VRPMS.Common\VRPMS.Composition.csproj" />
+      <ProjectReference Include="..\VRPMS.Composition\VRPMS.Composition.csproj" />
     </ItemGroup>
 
 </Project>
