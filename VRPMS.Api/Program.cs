@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Scalar.AspNetCore;
-using VRPMS.Common.Helpers;
+using VRPMS.Api.Filters;
+using VRPMS.Api.Settings;
 using VRPMS.Composition.BusinessLogic;
+using VRPMS.Composition.Helpers;
+using VRPMS.DataContracts.Constants.ControllerConstants;
 
 namespace VRPMS.Api;
 
@@ -11,10 +14,21 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.WebHost.UseKestrel().UseUrls("http://0.0.0.0:8080");
+        builder.WebHost.UseKestrel(options =>
+        {
+            options.ListenAnyIP(8080);
+        });
 
         builder.Services.AddOpenApi();
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(options =>
+        {
+            options.Filters.Add<BusinessExceptionFilter>();
+        });
+        builder.Services.AddHealthChecks();
+
+        var scalarConfig = builder.Configuration
+            .GetSection(SectionConstants.ScalarApi)
+            .Get<ScalarApiSettings>() ?? new ScalarApiSettings();
 
         builder.Services.AddCors(options =>
         {
@@ -38,28 +52,24 @@ public static class Program
         var app = builder.Build();
 
         app.UseForwardedHeaders();
+        app.UseCors();
 
-        app.UseHttpsRedirection();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseHttpsRedirection();
+        }
 
         app.UseRouting();
 
-        app.UseCors();
-
         app.MapOpenApi();
-
-        app.MapScalarApiReference(endpointPrefix: "scalar", options =>
+        app.MapScalarApiReference(endpointPrefix: scalarConfig.Prefix, options =>
         {
-            options.WithTitle("VRPMS API");
-            options.WithTheme(ScalarTheme.BluePlanet);
-            options.WithSidebar(true);
+            options.WithTitle(scalarConfig.Title);
+            options.WithTheme(Enum.Parse<ScalarTheme>(scalarConfig.Theme));
+            options.WithSidebar(scalarConfig.Sidebar);
         });
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-
-        app.MapGet("/", () => Results.Ok("VRPMS API is running"));
+        app.MapHealthChecks(HealthControllerConstants.Prefix);
 
         app.MapControllers();
 

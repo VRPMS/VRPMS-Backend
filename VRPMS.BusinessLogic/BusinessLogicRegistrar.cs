@@ -12,5 +12,6 @@ public class BusinessLogicRegistrar : IRegistrable
         services.AddScoped<ILocationsService, LocationsService>();
         services.AddScoped<ICarsService, CarsService>();
         services.AddScoped<ILovsService, LovsService>();
+        services.AddScoped<IDataService, DataService>();
     }
 }
