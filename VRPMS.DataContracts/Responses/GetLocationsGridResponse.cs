@@ -5,10 +5,10 @@ public class GetLocationsGridResponse
     public int Id { get; set; }
     
     public BaseTypeResponse PointType { get; set; } = null!;
-    
-    public double Longitude { get; set; }
-    
+   
     public double Latitude { get; set; }
+
+    public double Longitude { get; set; }
     
     public TimeSpan ServiceTime { get; set; }
     

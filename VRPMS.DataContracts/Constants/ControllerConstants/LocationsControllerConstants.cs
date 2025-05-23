@@ -2,5 +2,5 @@
 
 public static class LocationsControllerConstants
 {
-    public const string Prefix = "Locations";
+    public const string Prefix = "/locations";
 }

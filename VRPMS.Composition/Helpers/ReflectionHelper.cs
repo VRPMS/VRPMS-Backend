@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using VRPMS.Common.Services;
 
-namespace VRPMS.Common.Helpers;
+namespace VRPMS.Composition.Helpers;
 
 public static class ReflectionHelper
 {

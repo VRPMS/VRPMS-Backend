@@ -13,11 +13,11 @@ internal class Point
     [Column("point_type_id"), NotNull]
     public int PointTypeId { get; set; }
 
-    [Column("longitude", DataType = DataType.Double), NotNull]
-    public double Longitude { get; set; }
-
     [Column("latitude", DataType = DataType.Double), NotNull]
     public double Latitude { get; set; }
+
+    [Column("longitude", DataType = DataType.Double), NotNull]
+    public double Longitude { get; set; }
 
     [Column("service_time", DataType = DataType.Interval), NotNull]
     public TimeSpan ServiceTime { get; set; }
