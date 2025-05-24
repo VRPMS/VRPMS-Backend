@@ -2,7 +2,7 @@
 
 public class ScalarApiSettings
 {
-    public string Prefix { get; set; } = "ScalarApi";
+    public string Prefix { get; set; } = "scalar";
 
     public string Title { get; set; } = "VRPMS API";
 

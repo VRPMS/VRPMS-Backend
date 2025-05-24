@@ -20,6 +20,13 @@
       </Content>
     </ItemGroup>
 
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\VRPMS.BusinessLogic\VRPMS.BusinessLogic.csproj" />
       <ProjectReference Include="..\VRPMS.Composition\VRPMS.Composition.csproj" />
