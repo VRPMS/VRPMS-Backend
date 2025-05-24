@@ -14,10 +14,7 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.WebHost.UseKestrel(options =>
-        {
-            options.ListenAnyIP(8080);
-        });
+        builder.WebHost.UseKestrel().UseUrls("http://0.0.0.0:8080");
 
         builder.Services.AddOpenApi();
         builder.Services.AddControllers(options =>
