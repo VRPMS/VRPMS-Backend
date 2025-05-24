@@ -21,6 +21,7 @@ RUN dotnet publish "VRPMS.Api/VRPMS.Api.csproj" -c Release -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
+COPY --from=build /src/VRPMS.Api/appsettings.json ./
 
 EXPOSE 8080
 
