@@ -59,7 +59,7 @@ public static class Program
         app.UseRouting();
 
         app.MapOpenApi();
-        app.MapScalarApiReference(endpointPrefix: scalarConfig.Prefix, options =>
+        app.MapScalarApiReference(endpointPrefix: "scalar", options =>
         {
             options.WithTitle(scalarConfig.Title);
             options.WithTheme(Enum.Parse<ScalarTheme>(scalarConfig.Theme));
