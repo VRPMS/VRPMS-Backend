@@ -39,7 +39,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
             DemandTypes = demandTypes,
             Locations = locations,
             LocationDemands = GetLocationDemands(tables[ExcelTableNames.Points], demandTypes.Count),
-            LocationsTimeWindows = GetLocationTimeWindows(tables[ExcelTableNames.Points], demandTypes.Count, timeWindowsCount),
+            LocationTimeWindows = GetLocationTimeWindows(tables[ExcelTableNames.Points], demandTypes.Count, timeWindowsCount),
             LocationRoutes = GetLocationRoutes(tables[ExcelTableNames.Routes], locations),
             LocationSupplyChains = GetLocationSupplyChains(tables[ExcelTableNames.CrossDockPoints], locations),
             Cars = GetCars(tables[ExcelTableNames.Cars], demandTypes.Count, locations),
@@ -60,7 +60,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
             demandTypes.Add(new DemandTypeDto
             {
                 Id = i,
-                Name = $"DemandType {i}"
+                Name = $"Demand {i}"
             });
         }
 
@@ -278,7 +278,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
                 WorkStart = workStart < minTime || workStart == workEnd ? null : TimeSpan.FromSeconds(workStart),
                 WorkEnd = workEnd > maxTime || workStart == workEnd ? null : TimeSpan.FromSeconds(workEnd),
                 OverWorkPenalty = excelValidator.GetValueAndCheckType<int>(row[capacityNextIndex + 4], ExcelTableNames.Cars, x => x >= 0),
-                RouteTemplate = routeTemplate
+                RouteTemplate = routeTemplate.ToArray()
             });
         }
 

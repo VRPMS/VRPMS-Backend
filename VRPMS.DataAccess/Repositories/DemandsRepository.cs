@@ -1,4 +1,7 @@
 ﻿using LinqToDB;
+using LinqToDB.Data;
+using VRPMS.DataAccess.Entities;
+using VRPMS.DataAccess.Interfaces.Dtos;
 using VRPMS.DataAccess.Interfaces.Repositories;
 using VRPMS.DataContracts.Responses;
 
@@ -19,5 +22,19 @@ internal class DemandsRepository(
             };
 
         return await query.ToListAsync(cancellationToken);
+    }
+
+    public async Task<bool> DemandsBulkCopy(List<DemandTypeDto> demands, CancellationToken cancellationToken = default)
+    {
+        var result = await db.BulkCopyAsync(new BulkCopyOptions
+        {
+            KeepIdentity = true
+        }, demands.Select(x => new Demand
+        {
+            Id = x.Id,
+            Name = x.Name,
+        }), cancellationToken);
+
+        return !result.Abort && result.RowsCopied == demands.Count;
     }
 }

@@ -2,16 +2,15 @@
 
 public class BusinessRuleResponse
 {
-    public BusinessRuleResponse(BusinessException businessException)
+    public BusinessRuleResponse(Exception exception)
     {
-        Type = businessException.GetType().Name;
-        Status = businessException.StatusCode ?? default;
-        Message = businessException.Message;
+        Type = exception.GetType().Name;
+        Message = exception.Message;
     }
 
     public string Type { get; set; }
 
-    public int Status { get; set; }
+    public int Status { get; set; } = default;
 
     public string Message { get; set; }
 }

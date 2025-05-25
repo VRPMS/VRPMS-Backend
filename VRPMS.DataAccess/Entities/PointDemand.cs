@@ -1,9 +1,10 @@
 ﻿using LinqToDB;
 using LinqToDB.Mapping;
+using VRPMS.DataAccess.Constants;
 
 namespace VRPMS.DataAccess.Entities;
 
-[Table("point_demands", Schema = "vrpms")]
+[Table("point_demands", Schema = DbConstants.Schema)]
 internal class PointDemand
 {
     [PrimaryKey, Identity]

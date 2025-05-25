@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Scalar.AspNetCore;
 using VRPMS.Api.Filters;
+using VRPMS.Api.Middlewars;
 using VRPMS.Api.Settings;
 using VRPMS.Composition.BusinessLogic;
 using VRPMS.Composition.Helpers;
@@ -59,6 +60,9 @@ public static class Program
         }
 
         app.UseRouting();
+
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+        app.UseMiddleware<TransactionMiddleware>();
 
         app.MapOpenApi();
         app.MapScalarApiReference(endpointPrefix: scalarConfig.Prefix, options =>
