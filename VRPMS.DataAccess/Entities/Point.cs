@@ -36,4 +36,7 @@ internal class Point
 
     [Association(ThisKey = nameof(Id), OtherKey = nameof(PointTimeWindow.PointId))]
     public IEnumerable<PointTimeWindow> PointTimeWindows { get; set; } = null!;
+
+    [Association(ThisKey = nameof(Id), OtherKey = nameof(PointRoute.FromPointId))]
+    public IEnumerable<PointRoute> PointRoutes { get; set; } = null!;
 }

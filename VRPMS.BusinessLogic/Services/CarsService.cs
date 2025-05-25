@@ -9,8 +9,8 @@ internal class CarsService(
     ICarsRepository carsRepository)
     : ICarsService
 {
-    public async Task<IEnumerable<GetCarsGridResponse>> GetCarsGrid(GetCarsGridRequest request)
+    public async Task<IEnumerable<GetCarsGridResponse>> GetCarsGrid()
     {
-        return await carsRepository.Get(request);
+        return await carsRepository.Get();
     }
 }

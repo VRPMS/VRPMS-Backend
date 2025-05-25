@@ -16,11 +16,9 @@ public class AppDataConnection(DataOptions<AppDataConnection> options) : DataCon
 
     internal ITable<PointDemand> PointDemands => this.GetTable<PointDemand>();
 
-    internal ITable<CarType> CarTypes => this.GetTable<CarType>();
+    internal ITable<PointSupplyChain> PointSupplyChains => this.GetTable<PointSupplyChain>();
 
     internal ITable<Car> Cars => this.GetTable<Car>();
-
-    internal ITable<CarTimeWindow> CarTimeWindows => this.GetTable<CarTimeWindow>();
 
     internal ITable<CarCapacity> CarCapacities => this.GetTable<CarCapacity>();
 }

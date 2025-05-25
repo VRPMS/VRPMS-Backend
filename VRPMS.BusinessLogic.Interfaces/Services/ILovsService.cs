@@ -7,6 +7,4 @@ public interface ILovsService
     Task<IEnumerable<BaseTypeResponse>> GetLocationTypesLov();
    
     Task<IEnumerable<BaseTypeResponse>> GetDemandTypesLov();
-    
-    Task<IEnumerable<BaseTypeResponse>> GetCarTypesLov();
 }
