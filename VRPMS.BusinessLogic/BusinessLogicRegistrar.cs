@@ -2,8 +2,8 @@
 using VRPMS.Common.Services;
 using VRPMS.BusinessLogic.Interfaces.Services;
 using VRPMS.BusinessLogic.Services;
-using VRPMS.BusinessLogic.Interfaces.Validators.BusinessValidators;
 using VRPMS.BusinessLogic.Validators.BusinessValidators;
+using VRPMS.BusinessLogic.Helpers;
 
 namespace VRPMS.BusinessLogic;
 
@@ -16,6 +16,8 @@ public class BusinessLogicRegistrar : IRegistrable
         services.AddScoped<ILovsService, LovsService>();
         services.AddScoped<IDataService, DataService>();
 
-        services.AddScoped<IExcelValidator, ExcelValidator>();
+        services.AddScoped<ExcelValidator>();
+
+        services.AddScoped<ExcelParser>();
     }
 }
