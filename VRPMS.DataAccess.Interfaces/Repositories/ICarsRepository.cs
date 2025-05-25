@@ -5,7 +5,5 @@ namespace VRPMS.DataAccess.Interfaces.Repositories;
 
 public interface ICarsRepository
 {
-    Task<IEnumerable<GetCarsGridResponse>> Get(GetCarsGridRequest request, CancellationToken cancellationToken = default);
-
-    Task<IEnumerable<BaseTypeResponse>> GetTypesLov(CancellationToken cancellationToken = default);
+    Task<IEnumerable<GetCarsGridResponse>> Get(CancellationToken cancellationToken = default);
 }

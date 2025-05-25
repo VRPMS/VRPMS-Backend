@@ -5,5 +5,5 @@ namespace VRPMS.BusinessLogic.Interfaces.Services;
 
 public interface ICarsService
 {
-    Task<IEnumerable<GetCarsGridResponse>> GetCarsGrid(GetCarsGridRequest request);
+    Task<IEnumerable<GetCarsGridResponse>> GetCarsGrid();
 }

@@ -7,6 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="ExcelDataReader" Version="3.7.0" />
+      <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\VRPMS.BusinessLogic.Interfaces\VRPMS.BusinessLogic.Interfaces.csproj" />
       <ProjectReference Include="..\VRPMS.Common\VRPMS.Common.csproj" />
       <ProjectReference Include="..\VRPMS.DataAccess.Interfaces\VRPMS.DataAccess.Interfaces.csproj" />

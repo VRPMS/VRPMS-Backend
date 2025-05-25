@@ -13,8 +13,8 @@ public class CarsController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IEnumerable<GetCarsGridResponse>> GetCarsGrids([FromQuery] GetCarsGridRequest request)
+    public async Task<IEnumerable<GetCarsGridResponse>> GetCarsGrids()
     {
-        return await carsService.GetCarsGrid(request);
+        return await carsService.GetCarsGrid();
     }
 }

@@ -21,10 +21,4 @@ public class LovsController(
     {
         return await lovsService.GetDemandTypesLov();
     }
-
-    [HttpGet(LovsControllerConstants.GetCarTypesLovRoute)]
-    public async Task<IEnumerable<BaseTypeResponse>> GetCarTypesLov()
-    {
-        return await lovsService.GetCarTypesLov();
-    }
 }
