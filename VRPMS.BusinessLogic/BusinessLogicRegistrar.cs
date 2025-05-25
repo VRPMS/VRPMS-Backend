@@ -4,6 +4,7 @@ using VRPMS.BusinessLogic.Interfaces.Services;
 using VRPMS.BusinessLogic.Services;
 using VRPMS.BusinessLogic.Validators.BusinessValidators;
 using VRPMS.BusinessLogic.Helpers;
+using System.Reflection;
 
 namespace VRPMS.BusinessLogic;
 
@@ -11,13 +12,13 @@ public class BusinessLogicRegistrar : IRegistrable
 {
     public void Register(IServiceCollection services)
     {
-        services.AddScoped<ILocationsService, LocationsService>();
-        services.AddScoped<ICarsService, CarsService>();
-        services.AddScoped<ILovsService, LovsService>();
-        services.AddScoped<IDataService, DataService>();
+        services.AddTransient<ILocationsService, LocationsService>();
+        services.AddTransient<ICarsService, CarsService>();
+        services.AddTransient<ILovsService, LovsService>();
+        services.AddTransient<IDataService, DataService>();
 
-        services.AddScoped<ExcelValidator>();
+        services.AddTransient<ExcelValidator>();
 
-        services.AddScoped<ExcelParser>();
+        services.AddTransient<ExcelParser>();
     }
 }

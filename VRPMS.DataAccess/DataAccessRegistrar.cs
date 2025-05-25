@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using VRPMS.Common.Services;
+using VRPMS.DataAccess.Functions;
+using VRPMS.DataAccess.Interfaces.Functions;
 using VRPMS.DataAccess.Interfaces.Repositories;
 using VRPMS.DataAccess.Repositories;
 
@@ -11,8 +13,11 @@ public class DataAccessRegistrar : IRegistrable
     {
         services.AddScoped<AppDataConnection>();
 
-        services.AddScoped<ILocationsRepository, LocationsRepository>();
-        services.AddScoped<ICarsRepository, CarsRepository>();
-        services.AddScoped<IDemandsRepository, DemandsRepository>();
+        services.AddTransient<ILocationsRepository, LocationsRepository>();
+        services.AddTransient<ICarsRepository, CarsRepository>();
+        services.AddTransient<IDemandsRepository, DemandsRepository>();
+
+        services.AddTransient<IVrpmsProcedures, VrpmsProcedures>();
+        services.AddTransient<IVrpmsFunctions, VrpmsFunctions>();
     }
 }

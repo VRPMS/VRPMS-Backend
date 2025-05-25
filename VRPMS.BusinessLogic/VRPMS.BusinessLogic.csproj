@@ -17,4 +17,8 @@
       <ProjectReference Include="..\VRPMS.DataAccess.Interfaces\VRPMS.DataAccess.Interfaces.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Mapping\" />
+    </ItemGroup>
+
 </Project>

@@ -1,9 +1,10 @@
 ﻿using LinqToDB;
 using LinqToDB.Mapping;
+using VRPMS.DataAccess.Constants;
 
 namespace VRPMS.DataAccess.Entities;
 
-[Table("cars", Schema = "vrpms")]
+[Table("cars", Schema = DbConstants.Schema)]
 internal class Car
 {
     [PrimaryKey, Identity]

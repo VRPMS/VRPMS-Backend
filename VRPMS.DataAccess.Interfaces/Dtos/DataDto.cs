@@ -8,7 +8,7 @@ public class DataDto
 
     public List<LocationDemandDto> LocationDemands { get; set; } = [];
 
-    public List<LocationTimeWindowDto> LocationsTimeWindows { get; set; } = [];
+    public List<LocationTimeWindowDto> LocationTimeWindows { get; set; } = [];
 
     public List<LocationRouteDto> LocationRoutes { get; set; } = [];
    

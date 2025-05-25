@@ -1,9 +1,10 @@
 ﻿using LinqToDB;
 using LinqToDB.Mapping;
+using VRPMS.DataAccess.Constants;
 
 namespace VRPMS.DataAccess.Entities;
 
-[Table("point_time_windows", Schema = "vrpms")]
+[Table("point_time_windows", Schema = DbConstants.Schema)]
 internal class PointTimeWindow
 {
     [PrimaryKey, Identity]
