@@ -46,6 +46,8 @@ public static class Program
         builder.Services.RegisterDefaultDatabase(builder.Configuration);
         builder.Services.RegisterAssemblies();
 
+        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
         var app = builder.Build();
 
         app.UseForwardedHeaders();

@@ -1,6 +1,6 @@
 ﻿namespace VRPMS.DataAccess.Interfaces.Dtos;
 
-public class UpdateDataDto
+public class DataDto
 {
     public List<DemandTypeDto> DemandTypes { get; set; } = [];
 
@@ -10,9 +10,9 @@ public class UpdateDataDto
 
     public List<LocationTimeWindowDto> LocationsTimeWindows { get; set; } = [];
 
-    public List<LocationSupplyChainDto> LocationSupplyChains { get; set; } = [];
-
     public List<LocationRouteDto> LocationRoutes { get; set; } = [];
+   
+    public List<LocationSupplyChainDto> LocationSupplyChains { get; set; } = [];
 
     public List<CarDto> Cars { get; set; } = [];
 
