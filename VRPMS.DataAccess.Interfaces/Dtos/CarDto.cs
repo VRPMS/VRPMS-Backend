@@ -14,5 +14,5 @@ public class CarDto
 
     public int OverWorkPenalty { get; set; }
 
-    public int?[] RouteTemplate { get; set; } = [];
+    public int RouteStartLocationId { get; set; }
 }

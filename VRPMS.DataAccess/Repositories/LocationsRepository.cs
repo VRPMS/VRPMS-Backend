@@ -83,7 +83,7 @@ internal class LocationsRepository(
         }, locations.Select(x => new Point
         {
             Id = x.Id,
-            PointTypeId = x.PointTypeId,
+            PointTypeId = x.LocationTypeId,
             Latitude = x.Latitude,
             Longitude = x.Longitude,
             ServiceTime = x.ServiceTime,
@@ -101,7 +101,7 @@ internal class LocationsRepository(
             KeepIdentity = false
         }, locationDemands.Select(x => new PointDemand
         {
-            PointId = x.PointId,
+            PointId = x.LocationId,
             DemandId = x.DemandId,
             DemandValue = x.DemandValue
         }), cancellationToken);
@@ -125,7 +125,7 @@ internal class LocationsRepository(
             .Where(x => x.WindowStart == null && x.WindowEnd == null)
             .Select(x => new PointTimeWindow
             {
-                PointId = x.PointId
+                PointId = x.LocationId
             }), cancellationToken);
 
         if (result.Abort)
@@ -141,7 +141,7 @@ internal class LocationsRepository(
             .Where(x => x.WindowStart != null && x.WindowEnd == null)
             .Select(x => new PointTimeWindow
             {
-                PointId = x.PointId,
+                PointId = x.LocationId,
                 WindowStart = x.WindowStart!.Value
             }), cancellationToken);
 
@@ -158,7 +158,7 @@ internal class LocationsRepository(
             .Where(x => x.WindowStart == null && x.WindowEnd != null)
             .Select(x => new PointTimeWindow
             {
-                PointId = x.PointId,
+                PointId = x.LocationId,
                 WindowEnd = x.WindowEnd!.Value
             }), cancellationToken);
 
@@ -175,7 +175,7 @@ internal class LocationsRepository(
             .Where(x => x.WindowStart != null && x.WindowEnd != null)
             .Select(x => new PointTimeWindow
             {
-                PointId = x.PointId,
+                PointId = x.LocationId,
                 WindowStart = x.WindowStart!.Value,
                 WindowEnd = x.WindowEnd!.Value
             }), cancellationToken);

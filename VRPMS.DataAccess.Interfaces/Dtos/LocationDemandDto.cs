@@ -2,7 +2,7 @@
 
 public class LocationDemandDto
 {
-    public int PointId { get; set; }
+    public int LocationId { get; set; }
 
     public int DemandId { get; set; }
 

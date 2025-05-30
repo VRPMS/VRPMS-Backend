@@ -6,10 +6,11 @@ COPY ["VRPMS.Api/VRPMS.Api.csproj", "VRPMS.Api/"]
 COPY ["VRPMS.BusinessLogic/VRPMS.BusinessLogic.csproj", "VRPMS.BusinessLogic/"]
 COPY ["VRPMS.BusinessLogic.Interfaces/VRPMS.BusinessLogic.Interfaces.csproj", "VRPMS.BusinessLogic.Interfaces/"]
 COPY ["VRPMS.Common/VRPMS.Common.csproj", "VRPMS.Common/"]
-COPY ["VRPMS.Composition/VRPMS.Composition.csproj", "VRPMS.Composition/"]"]
+COPY ["VRPMS.Composition/VRPMS.Composition.csproj", "VRPMS.Composition/"]
 COPY ["VRPMS.DataAccess/VRPMS.DataAccess.csproj", "VRPMS.DataAccess/"]
 COPY ["VRPMS.DataAccess.Interfaces/VRPMS.DataAccess.Interfaces.csproj", "VRPMS.DataAccess.Interfaces/"]
-COPY ["VRPMS.DataContracts/VRPMS.DataContracts.csproj", "VRPMS.DataContracts/"]"]
+COPY ["VRPMS.DataContracts/VRPMS.DataContracts.csproj", "VRPMS.DataContracts/"]
+COPY ["VRPMS.VRPCD/VRPMS.VRPCD.csproj", "VRPMS.VRPCD/"]
 COPY ["VRPMS Backend.sln", "./"]
 
 RUN dotnet restore

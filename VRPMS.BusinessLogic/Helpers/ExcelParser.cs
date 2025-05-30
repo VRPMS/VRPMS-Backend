@@ -1,10 +1,12 @@
 ﻿using ExcelDataReader;
 using System.Data;
+using System.Xml.Linq;
 using VRPMS.BusinessLogic.Constants;
 using VRPMS.BusinessLogic.Validators.BusinessValidators;
-using VRPMS.Common.Enums;
 using VRPMS.Common.Exceptions;
+using VRPMS.DataAccess.Interfaces.Constants;
 using VRPMS.DataAccess.Interfaces.Dtos;
+using VRPMS.VRPCD.Enums;
 
 namespace VRPMS.BusinessLogic.Helpers;
 
@@ -141,7 +143,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
             locations.Add(new LocationDto
             {
                 Id = id,
-                PointTypeId = pointType,
+                LocationTypeId = pointType,
                 Latitude = excelValidator.GetValueAndCheckType<double>(row[1], pointsTable.TableName, x => x >= minLatitude && x <= maxLatitude),
                 Longitude = excelValidator.GetValueAndCheckType<double>(row[2], pointsTable.TableName, x => x >= minLongitude && x <= maxLongitude),
                 ServiceTime = TimeSpan.FromSeconds(excelValidator.GetValueAndCheckType<double>(row[nextIndex], pointsTable.TableName, x => x >= 0)),
@@ -171,7 +173,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
                 {
                     locationDemands.Add(new LocationDemandDto
                     {
-                        PointId = id,
+                        LocationId = id,
                         DemandId = i + 1,
                         DemandValue = demandValue
                     });
@@ -209,7 +211,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
                 {
                     locationTimeWindows.Add(new LocationTimeWindowDto
                     {
-                        PointId = id,
+                        LocationId = id,
                         WindowStart = start < minTime ? null : TimeSpan.FromSeconds(start),
                         WindowEnd = end > maxTime ? null : TimeSpan.FromSeconds(end)
                     });
@@ -224,7 +226,6 @@ internal class ExcelParser(ExcelValidator excelValidator)
     {
         const int minTime = 0;
         const int maxTime = 86399;
-        const string asterisk = "*";
 
         List<CarDto> cars = [];
 
@@ -243,31 +244,11 @@ internal class ExcelParser(ExcelValidator excelValidator)
                 throw new BusinessException(string.Format(BusinessErrorMessages.InvalidDataInExcel, ExcelTableNames.Cars));
             }
 
-            List<int?> routeTemplate = [];
-            var strRouteTemplate = row[capacityNextIndex + 3].ToString()?.Trim(' ', '(', ')');
+            var routeStartPointId = excelValidator.GetValueAndCheckType<int>(row[capacityNextIndex + 3], ExcelTableNames.Cars);
 
-            if (!string.IsNullOrEmpty(strRouteTemplate))
+            if (!locations.Any(x => x.Id == routeStartPointId))
             {
-                var nodes = strRouteTemplate.Split(';');
-
-                foreach (var node in nodes)
-                {
-                    if (node == asterisk)
-                    {
-                        routeTemplate.Add(null);
-                    }
-                    else
-                    {
-                        if (int.TryParse(node, out int nodeInt) && locations.Any(x => x.Id == nodeInt))
-                        {
-                            routeTemplate.Add(nodeInt);
-                        }
-                        else
-                        {
-                            throw new BusinessException(string.Format(BusinessErrorMessages.InvalidDataInExcel, ExcelTableNames.Cars));
-                        }
-                    }
-                }
+                throw new BusinessException(string.Format(BusinessErrorMessages.InvalidDataInExcel, ExcelTableNames.Cars));
             }
 
             cars.Add(new CarDto
@@ -278,7 +259,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
                 WorkStart = workStart < minTime || workStart == workEnd ? null : TimeSpan.FromSeconds(workStart),
                 WorkEnd = workEnd > maxTime || workStart == workEnd ? null : TimeSpan.FromSeconds(workEnd),
                 OverWorkPenalty = excelValidator.GetValueAndCheckType<int>(row[capacityNextIndex + 4], ExcelTableNames.Cars, x => x >= 0),
-                RouteTemplate = routeTemplate.ToArray()
+                RouteStartLocationId = routeStartPointId
             });
         }
 
@@ -350,7 +331,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
             int? warehouseId = null;
             int? crossDockId = null;
 
-            if (!locations.Any(x => x.Id == clientId && x.PointTypeId == (int)LocationTypeEnum.Client))
+            if (!locations.Any(x => x.Id == clientId && x.LocationTypeId == (int)LocationTypeEnum.Client))
             {
                 throw new BusinessException(string.Format(BusinessErrorMessages.InvalidDataInExcel, ExcelTableNames.CrossDockPoints));
             }
@@ -359,7 +340,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
 
             if (supplier != 0)
             {
-                var supplierType = locations.FirstOrDefault(x => x.Id == supplier)?.PointTypeId;
+                var supplierType = locations.FirstOrDefault(x => x.Id == supplier)?.LocationTypeId;
 
                 if (supplierType is null)
                 {
@@ -386,7 +367,7 @@ internal class ExcelParser(ExcelValidator excelValidator)
 
             if (supplier != 0)
             {
-                var supplierType = locations.FirstOrDefault(x => x.Id == supplier)?.PointTypeId;
+                var supplierType = locations.FirstOrDefault(x => x.Id == supplier)?.LocationTypeId;
 
                 if (supplierType is null)
                 {

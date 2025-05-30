@@ -16,6 +16,7 @@ public class DataAccessRegistrar : IRegistrable
         services.AddTransient<ILocationsRepository, LocationsRepository>();
         services.AddTransient<ICarsRepository, CarsRepository>();
         services.AddTransient<IDemandsRepository, DemandsRepository>();
+        services.AddTransient<ISolutionsRepository, SolutionsRepository>();
 
         services.AddTransient<IVrpmsProcedures, VrpmsProcedures>();
         services.AddTransient<IVrpmsFunctions, VrpmsFunctions>();

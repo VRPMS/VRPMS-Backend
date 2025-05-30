@@ -16,9 +16,17 @@ public class AppDataConnection(DataOptions<AppDataConnection> options) : DataCon
 
     internal ITable<PointDemand> PointDemands => this.GetTable<PointDemand>();
 
+    internal ITable<PointRoute> PointRoutes => this.GetTable<PointRoute>();
+
     internal ITable<PointSupplyChain> PointSupplyChains => this.GetTable<PointSupplyChain>();
 
     internal ITable<Car> Cars => this.GetTable<Car>();
 
     internal ITable<CarCapacity> CarCapacities => this.GetTable<CarCapacity>();
+
+    internal ITable<Solution> Solutions => this.GetTable<Solution>();
+
+    internal ITable<SolutionRoute> SolutionRoutes => this.GetTable<SolutionRoute>();
+
+    internal ITable<SolutionRouteVisit> SolutionRouteVisits => this.GetTable<SolutionRouteVisit>();
 }
