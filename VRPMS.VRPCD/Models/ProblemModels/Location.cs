@@ -20,5 +20,5 @@ public class Location
 
     public List<LocationDestination> Destinations { get; set; } = [];
    
-    public LocationSupplyChain SupplyChain { get; set; } = new();
+    public LocationSupplyChain? SupplyChain { get; set; } = new();
 }

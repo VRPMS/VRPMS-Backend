@@ -73,6 +73,7 @@ public static class VrpcdHelper
 
             if (location.LocationType is LocationTypeEnum.Client)
             {
+                // here
                 location.SupplyChain = dataDto.LocationSupplyChains
                     .Where(supplyChain => supplyChain.ClientId == location.Id)
                     .Select(supplyChain => new LocationSupplyChain
@@ -80,7 +81,7 @@ public static class VrpcdHelper
                         Warehouse = problem.Locations.FirstOrDefault(l => l.Id == supplyChain.WarehouseId),
                         CrossDock = problem.Locations.FirstOrDefault(l => l.Id == supplyChain.CrossDockId)
                     })
-                    .First();
+                    .FirstOrDefault();
             }
         }
 
