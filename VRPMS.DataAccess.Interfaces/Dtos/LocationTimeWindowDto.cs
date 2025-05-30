@@ -2,7 +2,7 @@
 
 public class LocationTimeWindowDto
 {
-    public int PointId { get; set; }
+    public int LocationId { get; set; }
 
     public TimeSpan? WindowStart { get; set; }
 

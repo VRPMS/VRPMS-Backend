@@ -13,4 +13,8 @@ internal class BusinessErrorMessages
     public const string TruncateTablesFailed = "Failed to truncate tables in the database.";
     
     public const string DataCopyFailed = "Failed to copy {0} data to the database.";
+
+    public const string SolutionCreationFailed = "Failed to create solution in the database.";
+
+    public const string SolutionRouteCreationFailed = "Failed to create solution route in the database.";
 }

@@ -1,10 +1,8 @@
 ﻿using LinqToDB;
 using LinqToDB.Data;
-using VRPMS.Common.Extensions;
 using VRPMS.DataAccess.Entities;
 using VRPMS.DataAccess.Interfaces.Dtos;
 using VRPMS.DataAccess.Interfaces.Repositories;
-using VRPMS.DataContracts.Requests;
 using VRPMS.DataContracts.Responses;
 
 namespace VRPMS.DataAccess.Repositories;
@@ -40,7 +38,7 @@ internal class CarsRepository(
                     WindowEnd = c.WorkEnd
                 },
                 OverWorkPenalty = c.OverWorkPenalty,
-                RouteTemplate = c.RouteTemplate,
+                RouteTemplate = new List<int?>() { c.RouteStartPointId, null, c.RouteStartPointId },
                 CarCapacities = capacities.ToList(),
             };
 
@@ -69,7 +67,7 @@ internal class CarsRepository(
                 CapacityOverloadPenalty = x.CapacityOverloadPenalty,
                 MaxCapacityOverloadPenalty = x.MaxCapacityOverloadPenalty,
                 OverWorkPenalty = x.OverWorkPenalty,
-                RouteTemplate = x.RouteTemplate
+                RouteStartPointId = x.RouteStartLocationId
             }), cancellationToken);
 
         if (result.Abort)
@@ -90,7 +88,7 @@ internal class CarsRepository(
                 MaxCapacityOverloadPenalty = x.MaxCapacityOverloadPenalty,
                 WorkStart = x.WorkStart!.Value,
                 OverWorkPenalty = x.OverWorkPenalty,
-                RouteTemplate = x.RouteTemplate
+                RouteStartPointId = x.RouteStartLocationId
             }), cancellationToken);
 
         if (result.Abort)
@@ -111,7 +109,7 @@ internal class CarsRepository(
                 MaxCapacityOverloadPenalty = x.MaxCapacityOverloadPenalty,
                 WorkEnd = x.WorkEnd!.Value,
                 OverWorkPenalty = x.OverWorkPenalty,
-                RouteTemplate = x.RouteTemplate
+                RouteStartPointId = x.RouteStartLocationId
             }), cancellationToken);
 
         if (result.Abort)
@@ -133,7 +131,7 @@ internal class CarsRepository(
                 WorkStart = x.WorkStart!.Value,
                 WorkEnd = x.WorkEnd!.Value,
                 OverWorkPenalty = x.OverWorkPenalty,
-                RouteTemplate = x.RouteTemplate
+                RouteStartPointId = x.RouteStartLocationId
             }), cancellationToken);
 
         if (result.Abort)

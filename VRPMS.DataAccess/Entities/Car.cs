@@ -26,8 +26,11 @@ internal class Car
     [Column("overwork_penalty", DataType = DataType.Int32), NotNull]
     public int OverWorkPenalty { get; set; }
 
-    [Column("route_template"), NotNull]
-    public int?[] RouteTemplate { get; set; } = [];
+    [Column("route_start_point_id", DataType = DataType.Int32), NotNull]
+    public int RouteStartPointId { get; set; }
+
+    [Association(ThisKey = nameof(RouteStartPointId), OtherKey = nameof(Entities.Point.Id), CanBeNull = false)]
+    public Point RouteStartPoint { get; set; } = null!;
 
     [Association(ThisKey = nameof(Id), OtherKey = nameof(CarCapacity.CarId))]
     public IEnumerable<CarCapacity> CarCapacities { get; set; } = null!;

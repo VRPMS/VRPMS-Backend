@@ -16,6 +16,7 @@ public class BusinessLogicRegistrar : IRegistrable
         services.AddTransient<ICarsService, CarsService>();
         services.AddTransient<ILovsService, LovsService>();
         services.AddTransient<IDataService, DataService>();
+        services.AddTransient<ISolutionsService, SolutionsService>();
 
         services.AddTransient<ExcelValidator>();
 

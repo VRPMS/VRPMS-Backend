@@ -4,7 +4,7 @@ public class LocationDto
 {
     public int Id { get; set; }
 
-    public int PointTypeId { get; set; }
+    public int LocationTypeId { get; set; }
 
     public double Latitude { get; set; }
 

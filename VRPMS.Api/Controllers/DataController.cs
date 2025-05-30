@@ -12,8 +12,8 @@ public class DataController(
 {
     [HttpPost(DataControllerConstants.ImportDataSuffix)]
     [Consumes("multipart/form-data")]
-    public async Task ImportData([FromForm] IFormFile file)
+    public async Task ImportData([FromForm] IFormFile fileName)
     {
-        await dataService.ImportData(file.OpenReadStream());
+        await dataService.ImportData(fileName.OpenReadStream());
     }
 }

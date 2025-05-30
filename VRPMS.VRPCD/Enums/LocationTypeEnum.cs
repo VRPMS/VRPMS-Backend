@@ -1,4 +1,4 @@
-﻿namespace VRPMS.Common.Enums;
+﻿namespace VRPMS.VRPCD.Enums;
 
 public enum LocationTypeEnum
 {
