@@ -23,8 +23,7 @@ public abstract class SolutionMethodBase
 
         Locations = problem.Locations.ToDictionary(location => location.Id, location => location);
        
-        if (!Locations.Any() || Locations.Any(x => !x.Value.Destinations.Any()) 
-            || Locations.Any(x => x.Value.LocationType == LocationTypeEnum.Client && !x.Value.Demands.Any()))
+        if (!Locations.Any() || Locations.Any(x => !x.Value.Destinations.Any()))
         {
             throw new ArgumentException(ErrorMessages.LocationNotFound);
         }
@@ -48,11 +47,13 @@ public abstract class SolutionMethodBase
         }
 
         Clients = problem.Locations
-            .Where(x => x.LocationType == LocationTypeEnum.Client)
+            .Where(x => x.LocationType == LocationTypeEnum.Client
+                        && x.SupplyChain != null
+                        && !(x.SupplyChain.CrossDock == null && x.SupplyChain.Warehouse == null)
+                        && x.Demands.Any())
             .ToDictionary(location => location.Id, location => location);
 
-        if (!Clients.Any() || Clients
-            .Any(c => c.Value.SupplyChain.CrossDock == null && c.Value.SupplyChain.Warehouse == null))
+        if (!Clients.Any())
         {
             throw new ArgumentException(ErrorMessages.ClientNotFound);
         }

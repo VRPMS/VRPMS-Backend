@@ -62,6 +62,24 @@ internal class LocationsRepository(
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<IEnumerable<BaseRouteResponse>> GetRoutes(CancellationToken cancellationToken = default)
+    {
+        var query =
+            from pr in db.PointRoutes
+            select new BaseRouteResponse
+            {
+                FromLocationId = pr.FromPointId,
+                ToLocationId = pr.ToPointId,
+                Duration = pr.Duration,
+                Distance = pr.Distance
+            };
+
+        return await query
+            .OrderBy(pr => pr.FromLocationId)
+            .ThenBy(pr => pr.ToLocationId)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<BaseTypeResponse>> GetTypesLov(CancellationToken cancellationToken = default)
     {
         var query =

@@ -8,6 +8,8 @@ public interface ILocationsRepository
 {
     Task<IEnumerable<GetLocationsGridResponse>> Get(GetLocationsGridRequest request, CancellationToken cancellationToken = default);
 
+    Task<IEnumerable<BaseRouteResponse>> GetRoutes(CancellationToken cancellationToken = default);
+
     Task<IEnumerable<BaseTypeResponse>> GetTypesLov(CancellationToken cancellationToken = default);
 
     Task<bool> LocationsBulkCopy(List<LocationDto> locations, CancellationToken cancellationToken = default);
