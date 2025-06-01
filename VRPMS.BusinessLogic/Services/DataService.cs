@@ -6,7 +6,6 @@ using VRPMS.DataAccess.Interfaces.Dtos;
 using VRPMS.DataAccess.Interfaces.Functions;
 using VRPMS.DataAccess.Interfaces.Repositories;
 using VRPMS.VRPCD;
-using VRPMS.VRPCD.Methods.BasicSolutionMethods;
 
 namespace VRPMS.BusinessLogic.Services;
 
@@ -46,9 +45,8 @@ internal class DataService(
             (nameof(dataDto.CarCapacities), () => carsRepository.CarCapacitiesBulkCopy(dataDto.CarCapacities))
         );
 
-        Solver solver = new(basicSolver: new NearestNeighborMethod());
-
-        SolutionDto solutionDto = VrpcdHelper.GetSolutionDto(solver.Solve(VrpcdHelper.GetProblem(dataDto)));
+        Solver solver = new(VrpcdHelper.GetProblem(dataDto));
+        SolutionDto solutionDto = VrpcdHelper.GetSolutionDto(solver.Solve());
 
         var solutionId = await solutionsRepository.CreateSolution(solutionDto);
 

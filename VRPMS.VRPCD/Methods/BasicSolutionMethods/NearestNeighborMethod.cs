@@ -1,19 +1,32 @@
-﻿using VRPMS.VRPCD.Methods.SolutionMethods;
+﻿using VRPMS.VRPCD.Helpers;
+using VRPMS.VRPCD.Methods.SolutionMethods;
 using VRPMS.VRPCD.Models;
 using VRPMS.VRPCD.Models.SolutionModels;
 
 namespace VRPMS.VRPCD.Methods.BasicSolutionMethods;
 
-public class NearestNeighborMethod : SolutionMethodBase
+public class NearestNeighborMethod : BasicSolutionMethodBase
 {
-    private record Job(int[] SupplyNodeIds, HashSet<int> ClientIds);
+    public NearestNeighborMethod() { }
 
-    public override Solution Solve(Problem problem)
+    public NearestNeighborMethod(Problem problem) : base(problem) { }
+
+    public override Solution Solve(Problem? problem = null)
     {
-        InitProperties(problem);
+        if (problem != null)
+        {
+            Problem = problem;
+        }
+
+        if (Problem == null)
+        {
+            throw new ArgumentNullException(nameof(problem), ErrorMessages.ProblemCannotBeNull);
+        }
 
         List<int> remainingCars = Cars.Keys.ToList();
         HashSet<int> remainingClients = Clients.Keys.ToHashSet();
+        bool extendCapacity = false;
+        bool extendMaxCapacity = false;
 
         // Until we have Clients
         while (remainingClients.Any())
@@ -29,6 +42,13 @@ public class NearestNeighborMethod : SolutionMethodBase
             // If there are no remaining cars, but there are still unvisited clients - refresh the list of cars
             if (!remainingCars.Any())
             {
+                if (extendCapacity)
+                {
+                    extendMaxCapacity = true;
+                }
+
+                extendCapacity = true;
+
                 remainingCars.AddRange(Cars.Keys.ToList());
             }
 
@@ -43,7 +63,7 @@ public class NearestNeighborMethod : SolutionMethodBase
                 ).MinBy(x => x.d)!;
 
             // 3) Building route for selected route and supplier
-            var removedIds = BuildRouteForJob(best.carId, best.job);
+            var removedIds = BuildRouteForJob(best.carId, best.job, extendCapacity, extendMaxCapacity);
 
             // 4) Refreshing Unvisited ClientIds and remaining cars
             foreach (var clientId in removedIds)
@@ -78,59 +98,42 @@ public class NearestNeighborMethod : SolutionMethodBase
             }
         }
 
-        Solution.TotalScore = GetTotalScore();
+        if (!extendCapacity)
+        {
+            // 7) If we have remaining cars, we need to add them to the solution with empty routes
+            foreach (var carId in remainingCars)
+            {
+                var car = Cars[carId];
+
+                Solution.SolutionRoutes.Add(new CarRoute
+                {
+                    Car = car,
+                    CurrentLoad = car.Capacities.ToDictionary(c => c.DemandId, c => 0.0),
+                    CapacityPenalty = 0.0M,
+                    TimeWindowPenalty = 0.0M,
+                    OverWorkPenalty = 0.0M,
+                    TotalDistance = 0.0M,
+                    CurrentTime = car.WorkStart,
+                    Visits =
+                    [
+                        new LocationVisit
+                        {
+                            Location = car.RouteStart,
+                            ArrivalTime = car.WorkStart
+                        }
+                    ]
+                });
+            }
+        }
+
         return Solution;
     }
 
-    private List<Job> BuildJobs(HashSet<int> remainingClientIds)
-    {
-        var jobs = new List<Job>();
-
-        foreach (var warehouse in Warehouses)
-        {
-            // DIRECT: Warehouse → Client
-            var direct = remainingClientIds
-                    .Where(clientId => Clients[clientId].SupplyChain.Warehouse?.Id == warehouse.Key
-                                    && Clients[clientId].SupplyChain.CrossDock == null)
-                    .ToHashSet();
-
-            if (direct.Any())
-            {
-                jobs.Add(new Job([warehouse.Key], direct));
-            }
-
-            // VIA: Warehouse → CrossDock → Client
-            var viaGroups = remainingClientIds
-                    .Select(clientId => Clients[clientId])
-                    .Where(client => client.SupplyChain.Warehouse?.Id == warehouse.Key
-                                  && client.SupplyChain.CrossDock != null)
-                    .GroupBy(c => c.SupplyChain.CrossDock!.Id);
-
-            foreach (var group in viaGroups)
-            {
-                jobs.Add(new Job([warehouse.Key, group.Key],
-                    group.Select(client => client.Id).ToHashSet()));
-            }
-        }
-
-        // ATDOCK: CrossDock → Client
-        foreach (var crossDock in CrossDocks)
-        {
-            var atDock = remainingClientIds
-                    .Where(clientId => Clients[clientId].SupplyChain.Warehouse == null
-                               && Clients[clientId].SupplyChain.CrossDock?.Id == crossDock.Key)
-                    .ToHashSet();
-
-            if (atDock.Any())
-            {
-                jobs.Add(new Job([crossDock.Key], atDock));
-            }
-        }
-
-        return jobs;
-    }
-
-    private List<int> BuildRouteForJob(int carId, Job job)
+    private List<int> BuildRouteForJob(
+        int carId, 
+        Job job,
+        bool extendCapacity = false,
+        bool extendMaxCapacity = false)
     {
         var car = Cars[carId];
 
@@ -177,13 +180,15 @@ public class NearestNeighborMethod : SolutionMethodBase
         }
 
         // 3) Serve ClientIds by Nearest Neighbor logic
-        return ServeNearest(route, currentLocationId, job.ClientIds);
+        return ServeNearest(route, currentLocationId, job.ClientIds, extendCapacity, extendMaxCapacity);
     }
 
     private List<int> ServeNearest(
         CarRoute route,
         int routeStartId,
-        HashSet<int> toServeIds)
+        HashSet<int> toServeIds,
+        bool extendCapacity = false,
+        bool isRefreshed = false)
     {
         List<int> removedLocationIds = [];
         var currentLocationId = routeStartId;
@@ -194,11 +199,14 @@ public class NearestNeighborMethod : SolutionMethodBase
             var nextLocation = Clients[nextLocationId];
 
             // If Car is not able to serve nextLocationId clientId due to capacity limits, break the loop
-            if (nextLocation.Demands.Any(demand => 
-                route.CurrentLoad[demand.DemandId] + demand.DemandValue > 
-                CapacityMap[route.Car.Id][demand.DemandId].MaxCapacity))
+            if (!isRefreshed)
             {
-                break;
+                if (nextLocation.Demands.Any(demand =>
+                    route.CurrentLoad[demand.DemandId] + demand.DemandValue >
+                    CapacityMap[route.Car.Id][demand.DemandId].MaxCapacity))
+                {
+                    break;
+                }
             }
 
             currentLocationId = VisitLocation(route, currentLocationId, nextLocationId);
@@ -222,55 +230,5 @@ public class NearestNeighborMethod : SolutionMethodBase
         }
 
         return removedLocationIds;
-    }
-
-    private int VisitLocation(
-        CarRoute route,
-        int previousLocationId,
-        int nextLocationId)
-    {
-        // 1) travel time
-        route.TotalDistance += (decimal)DestinationMap[previousLocationId][nextLocationId].Distance;
-        var travel = DestinationMap[previousLocationId][nextLocationId].Duration;
-        route.CurrentTime += travel;
-
-        // 2) Arrival
-        var arrival = route.CurrentTime;
-        var nextLocation = Locations[nextLocationId];
-
-        // 3) Time Windows
-        var timeWindow = nextLocation.TimeWindows
-            .OrderBy(tw => tw.WindowEnd)
-            .FirstOrDefault(tw => tw.WindowEnd > arrival)
-            ?? nextLocation.TimeWindows
-            .OrderBy(tw => tw.WindowEnd)
-            .Last();
-
-        var windowStart = timeWindow.WindowStart;
-        var windowEnd = timeWindow.WindowEnd;
-
-        if (arrival < windowStart)
-        {
-            var wait = (decimal)(windowStart - arrival).TotalMinutes;
-            route.TimeWindowPenalty += wait * nextLocation.WaitPenalty;
-            arrival = windowStart;
-        }
-        else if (arrival > windowEnd)
-        {
-            var late = (decimal)(arrival - windowEnd).TotalMinutes;
-            route.TimeWindowPenalty += late * nextLocation.LatePenalty;
-        }
-
-        // 4) service time
-        route.CurrentTime = arrival + nextLocation.ServiceTime;
-        
-        route.Visits.Add(new LocationVisit
-        {
-            Location = nextLocation,
-            ArrivalTime = arrival,
-            DepartureTime = route.CurrentTime
-        });
-
-        return nextLocationId;
     }
 }   
