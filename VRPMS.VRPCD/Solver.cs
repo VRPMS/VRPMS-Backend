@@ -1,19 +1,32 @@
-﻿using VRPMS.VRPCD.Methods.SolutionMethods;
+﻿using VRPMS.VRPCD.Helpers;
+using VRPMS.VRPCD.Methods.BasicSolutionMethods;
+using VRPMS.VRPCD.Methods.SolutionMethods;
+using VRPMS.VRPCD.Methods.SolutionSearchMethods;
 using VRPMS.VRPCD.Models;
 
 namespace VRPMS.VRPCD;
 
 public class Solver
 {
-    public Solver(SolutionMethodBase basicSolver)
+    public Solver(Problem problem)
     {
-        BasicSolver = basicSolver;
+        if (problem == null)
+        {
+            throw new ArgumentNullException(nameof(problem), ErrorMessages.ProblemCannotBeNull);
+        }
+
+        BestSolutionSolver = new TabuSearchMethod();
+        BasicSolver = new NearestNeighborMethod(problem);
     }
 
-    public SolutionMethodBase BasicSolver { get; set; }
+    public BasicSolutionMethodBase BasicSolver { get; private set; }
 
-    public Solution Solve(Problem problem)
+    public SolutionSearchMethodBase BestSolutionSolver { get; private set; }
+
+    public Solution Solve()
     {
-        return BasicSolver.Solve(problem);
+        Solution initialSolution = BasicSolver.Solve();
+        BestSolutionSolver.BasicSolutionData = BasicSolver;
+        return BestSolutionSolver.Search();
     }
 }
