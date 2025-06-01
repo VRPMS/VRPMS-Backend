@@ -408,11 +408,6 @@ internal class ExcelParser(ExcelValidator excelValidator)
             });
         }
 
-        //if (supplyChains.Count != locations.Count(x => x.LocationTypeId == (int)LocationTypeEnum.Client))
-        //{
-        //    throw new BusinessException(string.Format(BusinessErrorMessages.InvalidDataInExcel, $"{ExcelTableNames.Points}' and/or '{ExcelTableNames.CrossDockPoints}"));
-        //}
-
         return supplyChains;
     }
 }
